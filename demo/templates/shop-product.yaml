@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-product-dpl
+  labels:
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      version: v1
+  template:
+    metadata:
+      labels: 
+        version: v1
+    spec:
+      containers:
+      - name: shop-product
+        image: devopseasylearning2021/s3-project01-espresso-shop-product:v1.0.0
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shop-product
+spec:
+  selector:
+    version: v1
+  ports:
+    - protocol: TCP
+      port: 8091
+      targetPort: 80

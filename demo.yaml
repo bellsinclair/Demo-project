@@ -1,0 +1,208 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-product-deploy
+  labels:
+    app: shop-product
+spec:
+  replicas: 2
+  selector: # to set up the deployment selector
+    matchLabels:
+      app: shop-product
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
+  template: # pods label
+    metadata:
+      labels:
+        app: shop-product
+        version: v1
+    spec:        
+      containers:
+      - name: shop-product
+        image: "devopseasylearning2021/s3-project01-espresso-shop-product:v1.0.0"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: espresso-shop-product-catalog-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: shop-product
+  ports:
+    - protocol: TCP
+      port: 8091
+      targetPort: 80
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coffee-shop-web
+  labels:
+    app: coffee-shop
+spec:
+  replicas: 2
+  selector: # to set up the deployment selector
+    matchLabels:
+      app: shop-web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
+  template: #Pods label section
+    metadata:
+      labels:
+        app: shop-web 
+        version: v1
+    spec:        
+      containers:
+      - name: shop-web
+        image: "devopseasylearning2021/s3-project01-espresso-shop:v1.0.0"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: ProductCatalogUrl 
+          valueFrom:
+            configMapKeyRef:   
+              name: coffee-shop      
+              key: ProdUrl 
+        - name: ReviewsUrl
+          valueFrom:
+            configMapKeyRef:
+              name: coffee-shop
+              key: RevUrl
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coffee-shop
+data:
+  ProdUrl: "http://espresso-shop-product-catalog-svc:8091"
+  RevUrl: "http://espresso-shop-reviews-svc:8092"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: espresso-shop-web-svc
+spec:
+  type: LoadBalancer
+  selector: 
+    version: v1
+    app: shop-web
+  ports:
+    - protocol: TCP
+      port: 8097
+      targetPort: 80
+      nodePort: 32009
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coffee-shop-review1
+  labels:
+    app: coffee-shop-review1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      version: v1
+      app: shop-reviews
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
+  template: # pods
+    metadata:
+      labels:
+        app: shop-reviews
+        version: v1
+    spec:        
+      containers:
+      - name: shop-review1
+        image: "devopseasylearning2021/s3-project01-espresso-shop-review:v1.0.0"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: SERVICE_VERSION 
+          valueFrom:
+            configMapKeyRef:   
+              name: coffee-shop-review1     
+              key: SVC_Ver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coffee-shop-review2
+data:
+  SVC_Ver: v1
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coffee-shop-review2
+  labels:
+    app: coffee-shop-review2
+spec:
+  replicas: 2
+  selector: # deployment selector
+    matchLabels:
+      version: v2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
+  template: # pod
+    metadata:
+      labels:
+        version: v2
+        app: shop-reviews
+
+    spec:        
+      containers:
+      - name: shop-review2
+        image: "devopseasylearning2021/s3-project01-espresso-shop-review:v1.0.0"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: SERVICE_VERSION 
+          valueFrom:
+            configMapKeyRef:   
+              name: coffee-shop-review2    
+              key: SVC_Ver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coffee-shop-review2
+data:
+  SVC_Ver: v2
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: espresso-shop-reviews-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: shop-reviews
+  ports:
+    - protocol: TCP
+      port: 8092
+      targetPort: 80

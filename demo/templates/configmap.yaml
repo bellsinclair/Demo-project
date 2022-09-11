@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cfm
+data:
+  # property-like keys; each key maps to a simple value
+  ProdUrl: "http://espresso-shop-product-catalog-svc:8091"
+  RevUrl: "http://espresso-shop-reviews-svc:8092"
+  sv1: v1
+  sv2: v2

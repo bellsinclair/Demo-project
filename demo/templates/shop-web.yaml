@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-web-dpl
+  labels:
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      version: v1
+  template:
+    metadata:
+      labels: 
+        version: v1
+    spec:
+      containers:
+      - name: shop-web
+        image: devopseasylearning2021/s3-project01-espresso-shop:v1.0.0
+        env:
+        - name: ProductCatalogUrl
+          valueFrom:
+            configMapKeyRef: 
+             name: cfm
+             key: ProdUrl
+
+        - name: ReviewsUrl
+          valueFrom:
+            configMapKeyRef: 
+             name: cfm
+             key: RevUrl
+        ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shop-web
+spec:
+  selector:
+    version: v1
+  ports:
+    - protocol: TCP
+      port: 8090
+      targetPort: 80
+  type: LoadBalancer
+
+
+
+
+
+
+
