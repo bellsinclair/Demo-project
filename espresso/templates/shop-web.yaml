@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coffee-shop-web
+  labels:
+    app: coffee-shop
+spec:
+  replicas: 2
+  selector: # to set up the deployment selector
+    matchLabels:
+      app: shop-web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
+  template: #Pods label section
+    metadata:
+      labels:
+        app: shop-web 
+        version: v1
+    spec:        
+      containers:
+      - name: shop-web
+        image: "devopseasylearning2021/s3-project01-espresso-shop:v1.0.0"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: ProductCatalogUrl 
+          valueFrom:
+            configMapKeyRef:   
+              name: coffee-shop      
+              key: ProdUrl 
+        - name: ReviewsUrl
+          valueFrom:
+            configMapKeyRef:
+              name: coffee-shop
+              key: RevUrl
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coffee-shop
+data:
+  ProdUrl: "http://espresso-shop-product-catalog-svc:8091"
+  RevUrl: "http://espresso-shop-reviews-svc:8092"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: espresso-shop-web-svc
+spec:
+  type: LoadBalancer
+  selector: 
+    version: v1
+    app: shop-web
+  ports:
+    - protocol: TCP
+      port: 8097
+      targetPort: 80
+      nodePort: 32009

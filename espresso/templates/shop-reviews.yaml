@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coffee-shop-review1
+  labels:
+    app: coffee-shop-review1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      version: v1
+      app: shop-reviews
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
+  template: # pods
+    metadata:
+      labels:
+        app: shop-reviews
+        version: v1
+    spec:        
+      containers:
+      - name: shop-review1
+        image: "devopseasylearning2021/s3-project01-espresso-shop-review:v1.0.0"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: SERVICE_VERSION 
+          valueFrom:
+            configMapKeyRef:   
+              name: coffee-shop-review1     
+              key: SVC_Ver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coffee-shop-review2
+data:
+  SVC_Ver: v1
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coffee-shop-review2
+  labels:
+    app: coffee-shop-review2
+spec:
+  replicas: 2
+  selector: # deployment selector
+    matchLabels:
+      version: v2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
+  template: # pod
+    metadata:
+      labels:
+        version: v2
+        app: shop-reviews
+
+    spec:        
+      containers:
+      - name: shop-review2
+        image: "devopseasylearning2021/s3-project01-espresso-shop-review:v1.0.0"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: SERVICE_VERSION 
+          valueFrom:
+            configMapKeyRef:   
+              name: coffee-shop-review2    
+              key: SVC_Ver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coffee-shop-review2
+data:
+  SVC_Ver: v2
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: espresso-shop-reviews-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: shop-reviews
+  ports:
+    - protocol: TCP
+      port: 8092
+      targetPort: 80
