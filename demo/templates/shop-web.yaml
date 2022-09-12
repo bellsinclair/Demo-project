@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: shop-web-dpl
   labels:
-   app: lshop-web
+   version: v1
 spec:
   replicas: 1
   selector:
@@ -12,6 +12,7 @@ spec:
   template:
     metadata:
       labels: 
+       version: v1 
        app: shop-web
     spec:
       containers:
@@ -37,7 +38,7 @@ metadata:
   name: shop-web
 spec:
   selector:
-   app: lshop-web
+   version: v1
   ports:
     - protocol: TCP
       port: 8090
