@@ -50,7 +50,7 @@ metadata:
   labels:
     app: coffee-shop
 spec:
-  replicas: 2
+  replicas: 3
   selector: # to set up the deployment selector
     matchLabels:
       app: shop-web
