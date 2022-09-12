@@ -12,6 +12,7 @@ spec:
   template:
     metadata:
       labels: 
+        app: shop-product
         version: v1
     spec:
       containers:

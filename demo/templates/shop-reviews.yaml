@@ -13,6 +13,7 @@ spec:
     metadata:
       labels: 
         version: v2
+        app: shop-review2
     spec:
       containers:
       - name: shop-review1
@@ -41,9 +42,10 @@ spec:
     metadata:
       labels: 
         version: v2
+        app: shop-review2
     spec:
       containers:
-      - name: shop-reviews
+      - name: shop-review2
         image: devopseasylearning2021/s3-project01-espresso-shop-review:v1.0.0
         env:
         - name: SERVICE_VERSION
