@@ -3,12 +3,12 @@ kind: Deployment
 metadata:
   name: shop-web-dpl
   labels:
-    app: shop-web
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      version: v1
+      app: shop-web
   template:
     metadata:
       labels: 
@@ -36,7 +36,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: shop-web
+  version: v1
 spec:
   selector:
     app: shop-web
