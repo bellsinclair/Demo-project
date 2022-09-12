@@ -37,7 +37,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: coffee-shop-review2
+  name: coffee-shop-review1
 data:
   SVC_Ver: v1
 
