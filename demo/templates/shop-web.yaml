@@ -8,7 +8,6 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-     app: shop-web
      version: v1
   template:
     metadata:
