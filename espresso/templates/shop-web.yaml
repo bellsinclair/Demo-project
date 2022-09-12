@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: coffee-shop-web
   labels:
-    app: coffee-shop
+    version: v1
 spec:
   replicas: 2
   selector: # to set up the deployment selector
@@ -17,8 +17,8 @@ spec:
   template: #Pods label section
     metadata:
       labels:
-        app: shop-web 
         version: v1
+        app: shop-web
     spec:        
       containers:
       - name: shop-web
@@ -54,7 +54,6 @@ spec:
   type: LoadBalancer
   selector: 
     version: v1
-    app: shop-web
   ports:
     - protocol: TCP
       port: 8097
