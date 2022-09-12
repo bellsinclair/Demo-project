@@ -102,7 +102,7 @@ spec:
     app: shop-web
   ports:
     - protocol: TCP
-      port: 8097
+      port: 8098
       targetPort: 80
       nodePort: 32009
 ---
