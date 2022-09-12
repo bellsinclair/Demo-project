@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: shop-review1-dpl
   labels:
-    version: v2
+    app: shop-review1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      version: v2
+      version: v1
   template:
     metadata:
       labels: 
-        version: v2
+        version: v1
         app: shop-review2
     spec:
       containers:
@@ -32,7 +32,7 @@ kind: Deployment
 metadata:
   name: shop-review2-dpl
   labels:
-    version: v2
+    app: shop-review2
 spec:
   replicas: 1
   selector:
@@ -62,7 +62,7 @@ metadata:
   name: shop-reviews-svc
 spec:
   selector:
-    version: v2
+    app: shop-review2
   ports:
     - protocol: TCP
       port: 8092
