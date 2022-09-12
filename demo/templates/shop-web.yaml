@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: shop-web-dpl
   labels:
-    version: v1
     app: shop-web
 spec:
   replicas: 1
@@ -25,7 +24,6 @@ spec:
             configMapKeyRef: 
              name: cfm
              key: ProdUrl
-
         - name: ReviewsUrl
           valueFrom:
             configMapKeyRef: 
