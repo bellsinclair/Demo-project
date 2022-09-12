@@ -9,6 +9,7 @@ spec:
   selector:
     matchLabels:
      app: shop-web
+     version: v1
   template:
     metadata:
       labels: 
