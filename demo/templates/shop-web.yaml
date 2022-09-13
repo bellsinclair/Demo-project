@@ -11,8 +11,7 @@ spec:
      app: shop-web
   template:
     metadata:
-      labels: 
-       version: v1 
+      labels:  
        app: shop-web
     spec:
       containers:
