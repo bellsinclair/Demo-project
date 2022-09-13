@@ -24,7 +24,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: shop-product
+  name: shop-product-svc
 spec:
   selector:
     version: v1
