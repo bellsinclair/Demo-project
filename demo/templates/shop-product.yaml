@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: shop-product-dpl
   labels:
-    version: v1
+    app: shop-product
 spec:
   replicas: 1
   selector:
@@ -28,6 +28,7 @@ metadata:
 spec:
   selector:
     version: v1
+    app: shop-product
   ports:
     - protocol: TCP
       port: 8091
