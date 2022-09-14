@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: shop-web-dpl
   labels:
-   appd: shop-webd
+   app: shop-web
 spec:
   replicas: 1
   selector:
