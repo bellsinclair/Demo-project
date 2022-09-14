@@ -3,16 +3,17 @@ kind: Deployment
 metadata:
   name: shop-web-dpl
   labels:
-   version: v1
+   app: shop-webd
 spec:
   replicas: 1
   selector:
     matchLabels:
-     version: v1
+     app: shop-web
   template:
     metadata:
       labels:  
        version: v1
+       app: shop-web
     spec:
       containers:
       - name: shop-web
@@ -37,7 +38,7 @@ metadata:
   name: shop-web-svc
 spec:
   selector:
-   version: v1
+   app: shop-webd
   ports:
     - protocol: TCP
       port: 8090
