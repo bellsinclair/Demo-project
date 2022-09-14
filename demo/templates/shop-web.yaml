@@ -3,12 +3,12 @@ kind: Deployment
 metadata:
   name: shop-web-dpl
   labels:
-   app: shop-web
+   version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
-     app: shop-web
+     version: v1
   template:
     metadata:
       labels:  
@@ -39,8 +39,7 @@ kind: Service
 metadata:
   name: shop-web-svc
 spec:
-  selector:
-    app: shop-web 
+  selector: 
     version: v1
   ports:
     - protocol: TCP
