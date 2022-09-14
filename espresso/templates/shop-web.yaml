@@ -59,4 +59,3 @@ spec:
     - protocol: TCP
       port: 8097
       targetPort: 80
-      nodePort: 32009
