@@ -51,7 +51,7 @@ kind: Service
 metadata:
   name: espresso-shop-web-svc
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector: 
     version: v1
     app: shop-web
