@@ -31,8 +31,8 @@ spec:
              name: cfm
              key: RevUrl
         ports:
-          - containerPort: 80
-            protocol: TCP
+        - containerPort: 80
+          protocol: TCP
 ---
 apiVersion: v1
 kind: Service
