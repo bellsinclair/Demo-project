@@ -3,12 +3,12 @@ kind: Deployment
 metadata:
   name: shop-review1-dpl
   labels:
-    app: shop-review1
+    app: shop-reviews
 spec:
   replicas: 1
   selector:
     matchLabels:
-      version: v1
+      app: shop-reviews
   template:
     metadata:
       labels: 
@@ -16,7 +16,7 @@ spec:
         app: shop-reviews
     spec:
       containers:
-      - name: shop-review1
+      - name: shop-reviews
         image: devopseasylearning2021/s3-project01-espresso-shop-review:v1.0.0
         env:
         - name: SERVICE_VERSION
@@ -32,12 +32,12 @@ kind: Deployment
 metadata:
   name: shop-review2-dpl
   labels:
-    app: shop-review2
+    app: shop-reviews
 spec:
   replicas: 1
   selector:
     matchLabels:
-      version: v2
+      app: shop-reviews
   template:
     metadata:
       labels: 
@@ -45,7 +45,7 @@ spec:
         app: shop-reviews
     spec:
       containers:
-      - name: shop-review2
+      - name: shop-reviews
         image: devopseasylearning2021/s3-project01-espresso-shop-review:v1.0.0
         env:
         - name: SERVICE_VERSION
@@ -54,7 +54,7 @@ spec:
              name: cfm
              key: sv2
         ports:
-          - containerPort: 80
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service

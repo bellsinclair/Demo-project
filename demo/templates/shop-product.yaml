@@ -8,7 +8,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      version: v1
+      app: shop-product
   template:
     metadata:
       labels: 
