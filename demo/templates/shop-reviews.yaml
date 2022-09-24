@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: shop-review1-dpl
+  name: shop-review1
   labels:
     app: shop-reviews
 spec:
@@ -30,7 +30,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: shop-review2-dpl
+  name: shop-review2
   labels:
     app: shop-reviews
 spec:
@@ -59,7 +59,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: shop-reviews-svc
+  name: shop-reviews
 spec:
   selector:
     app: shop-reviews
