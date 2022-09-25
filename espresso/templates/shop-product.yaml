@@ -11,7 +11,7 @@ spec:
       app: shop-product
   strategy:
     type:
-       rollingUpdate:
+      rollingUpdate:
         maxUnavailable: 1
         maxSurge: 1 
   template: # pods label
