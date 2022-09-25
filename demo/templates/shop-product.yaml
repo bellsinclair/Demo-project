@@ -9,22 +9,17 @@ spec:
   selector:
     matchLabels:
       app: shop-product
-  strategy:
-    type:
-      rollingUpdate:
-        maxUnavailable: 1
-        maxSurge: 1
-  template:
-    metadata:
-      labels: 
-        version: v1
-        app: shop-product
-    spec:
-      containers:
+template:
+  metadata:
+    labels:
+      version: v1
+      app: shop-product
+  spec:
+    containers:
       - name: shop-product
         image: devopseasylearning2021/s3-project01-espresso-shop-product:v1.0.0
         ports:
-        - containerPort: 80
+          - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
