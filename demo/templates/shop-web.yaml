@@ -3,12 +3,12 @@ kind: Deployment
 metadata:
   name: shop-web
   labels:
-   app: shop-webd
+    app: shop-webd
 spec:
   replicas: 2
   selector:
     matchLabels:
-     app: shop-web
+      app: shop-web
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -31,13 +31,13 @@ spec:
         - name: ProductCatalogUrl
           valueFrom:
             configMapKeyRef: 
-             name: cfm
-             key: ProdUrl
+              name: cfm
+              key: ProdUrl
         - name: ReviewsUrl
           valueFrom:
             configMapKeyRef: 
-             name: cfm
-             key: RevUrl
+              name: cfm
+              key: RevUrl
 ---
 apiVersion: v1
 kind: Service
