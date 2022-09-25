@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: shop-review1
   labels:
-    app: shop-reviews
+    app: shop-reviewsd
 spec:
   replicas: 2
   selector:
@@ -32,7 +32,7 @@ kind: Deployment
 metadata:
   name: shop-review2
   labels:
-    app: shop-reviews
+    app: shop-reviewsd
 spec:
   replicas: 2
   selector:

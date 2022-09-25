@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: shop-web
   labels:
-   app: shop-web
+   app: shop-webd
 spec:
   replicas: 2
   selector:
