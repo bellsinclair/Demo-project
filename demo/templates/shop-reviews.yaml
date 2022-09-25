@@ -5,7 +5,7 @@ metadata:
   labels:
     app: shop-reviews
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: shop-reviews
@@ -34,7 +34,7 @@ metadata:
   labels:
     app: shop-reviews
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: shop-reviews

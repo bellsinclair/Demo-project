@@ -5,15 +5,15 @@ metadata:
   labels:
     app: shop-product
 spec:
-  replicas: 2
+  replicas: 0
   selector:
     matchLabels:
       app: shop-product
   template:
     metadata:
       labels: 
-        app: shop-product
         version: v1
+        app: shop-product
     spec:
       containers:
       - name: shop-product
