@@ -9,6 +9,11 @@ spec:
   selector:
     matchLabels:
       app: shop-product
+  strategy:
+    type:
+      rollingUpdate:
+        maxUnavailable: 1
+        maxSurge: 1
   template:
     metadata:
       labels: 
@@ -29,6 +34,6 @@ spec:
   selector:
     app: shop-product
   ports:
-    - protocol: TCP
-      port: 8091
-      targetPort: 80
+  - protocol: TCP
+    port: 8091
+    targetPort: 80
