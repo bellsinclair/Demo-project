@@ -15,10 +15,10 @@ spec:
         version: v1
         app: shop-web      
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1 
+    type:
+      rollingUpdate:
+        maxUnavailable: 1
+        maxSurge: 1 
     spec:
       containers:
       - name: shop-web

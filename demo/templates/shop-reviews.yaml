@@ -15,10 +15,10 @@ spec:
         version: v1
         app: shop-reviews
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
+    type:
+      rollingUpdate:
+        maxUnavailable: 1
+        maxSurge: 1 
     spec:
       containers:
       - name: shop-reviews
@@ -30,7 +30,7 @@ spec:
              name: cfm
              key: sv1
         ports:
-          - containerPort: 80
+        - containerPort: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -49,10 +49,10 @@ spec:
         version: v2
         app: shop-reviews
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
+    type:
+      rollingUpdate:
+        maxUnavailable: 1
+        maxSurge: 1
     spec:
       containers:
       - name: shop-reviews
