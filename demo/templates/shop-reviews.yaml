@@ -14,11 +14,6 @@ spec:
       labels: 
         version: v1
         app: shop-reviews
-  strategy:
-    type:
-      rollingUpdate:
-        maxUnavailable: 1
-        maxSurge: 1 
     spec:
       containers:
       - name: shop-reviews
@@ -48,11 +43,6 @@ spec:
       labels: 
         version: v2
         app: shop-reviews
-  strategy:
-    type:
-      rollingUpdate:
-        maxUnavailable: 1
-        maxSurge: 1
     spec:
       containers:
       - name: shop-reviews
