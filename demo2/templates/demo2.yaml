@@ -33,7 +33,7 @@ spec:
     app: shop-web
   ports:
   - protocol: TCP
-    port: 8090
+    port: 8094
     targetPort: 80
   type: LoadBalancer
 ---
