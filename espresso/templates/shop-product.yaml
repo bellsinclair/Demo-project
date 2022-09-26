@@ -12,8 +12,13 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
+<<<<<<< HEAD
       maxUnavailable: 1
       maxSurge: 1 
+=======
+        maxUnavailable: 1
+        maxSurge: 1 
+>>>>>>> 5f1a06fe0c4db8a5a998f8965bedce0525f888f7
   template: # pods label
     metadata:
       labels:
