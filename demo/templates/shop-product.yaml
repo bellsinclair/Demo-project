@@ -1,25 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: shop-product
+  name: shop-product-deploy
   labels:
-    app: shop-productd
+    app: shop-product
 spec:
   replicas: 2
-  selector:
+  selector: # to set up the deployment selector
     matchLabels:
       app: shop-product
-template:
-  metadata:
-    labels:
-      version: v1
-      app: shop-product
-  spec:
-    containers:
-      - name: shop-product
-        image: devopseasylearning2021/s3-project01-espresso-shop-product:v1.0.0
-        ports:
-          - containerPort: 80
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template: # pods label
+    metadata:
+      labels:
+        app: shop-product
+        version: v1
+    spec:
+      containers:
+        - name: shop-product
+          image: "devopseasylearning2021/s3-project01-espresso-shop-product:v1.0.0"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
