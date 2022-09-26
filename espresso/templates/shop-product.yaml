@@ -25,7 +25,7 @@ spec:
           image: "devopseasylearning2021/s3-project01-espresso-shop-product:v1.0.0"
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+          - containerPort: 80
 
 ---
 apiVersion: v1
