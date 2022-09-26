@@ -12,25 +12,20 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-<<<<<<< HEAD
       maxUnavailable: 1
-      maxSurge: 1 
-=======
-        maxUnavailable: 1
-        maxSurge: 1 
->>>>>>> 5f1a06fe0c4db8a5a998f8965bedce0525f888f7
+      maxSurge: 1
   template: # pods label
     metadata:
       labels:
         app: shop-product
         version: v1
-    spec:        
+    spec:
       containers:
-      - name: shop-product
-        image: "devopseasylearning2021/s3-project01-espresso-shop-product:v1.0.0"
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 80
+        - name: shop-product
+          image: "devopseasylearning2021/s3-project01-espresso-shop-product:v1.0.0"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
 
 ---
 apiVersion: v1
