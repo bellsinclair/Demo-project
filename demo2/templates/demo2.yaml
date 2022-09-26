@@ -1,0 +1,182 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: shop-product
+spec:
+  selector:
+    app: shop-product
+  ports:
+  - protocol: TCP
+    port: 8091
+    targetPort: 80
+---
+# Source: demo/templates/shop-reviews.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: shop-reviews
+spec:
+  selector:
+    app: shop-reviews
+  ports:
+    - protocol: TCP
+      port: 8092
+      targetPort: 80
+---
+# Source: demo/templates/shop-web.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: shop-web
+spec:
+  selector:
+    app: shop-web
+  ports:
+  - protocol: TCP
+    port: 8090
+    targetPort: 80
+  type: LoadBalancer
+---
+# Source: demo/templates/shop-product.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-product-deploy
+  labels:
+    app: shop-product
+spec:
+  replicas: 2
+  selector: # to set up the deployment selector
+    matchLabels:
+      app: shop-product
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template: # pods label
+    metadata:
+      labels:
+        app: shop-product
+        version: v1
+    spec:
+      containers:
+        - name: shop-product
+          image: "devopseasylearning2021/s3-project01-espresso-shop-product:v1.0.0"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+# Source: demo/templates/shop-reviews.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coffee-shop-review1
+  labels:
+    app: coffee-shop-review1
+spec:
+  replicas: 2
+  selector: # deployment selector
+    matchLabels:
+      version: v1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template: # pod
+    metadata:
+      labels:
+        version: v1
+        app: shop-reviews
+    spec:
+      containers:
+        - name: shop-review1
+          image: "devopseasylearning2021/s3-project01-espresso-shop-review:v1.0.0"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: SERVICE_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: cfm
+                  key: sv1
+---
+# Source: demo/templates/shop-reviews.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coffee-shop-review2
+  labels:
+    app: coffee-shop-review2
+spec:
+  replicas: 2
+  selector: # deployment selector
+    matchLabels:
+      version: v2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template: # pod
+    metadata:
+      labels:
+        version: v2
+        app: shop-reviews
+    spec:
+      containers:
+        - name: shop-review2
+          image: "devopseasylearning2021/s3-project01-espresso-shop-review:v1.0.0"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: SERVICE_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: cfm
+                  key: sv2
+---
+# Source: demo/templates/shop-web.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-web
+  labels:
+    app: shop-webd
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shop-web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        version: v1
+        app: shop-web
+    spec:
+      containers:
+      - name: shop-web
+        image: devopseasylearning2021/s3-project01-espresso-shop:v1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        env:
+        - name: ProductCatalogUrl
+          valueFrom:
+            configMapKeyRef:
+              name: cfm
+              key: ProdUrl
+        - name: ReviewsUrl
+          valueFrom:
+            configMapKeyRef:
+              name: cfm
+              key: RevUrl
