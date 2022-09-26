@@ -10,10 +10,10 @@ spec:
     matchLabels:
       app: shop-product
   strategy:
-    type:
-      rollingUpdate:
-        maxUnavailable: 1
-        maxSurge: 1 
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
   template: # pods label
     metadata:
       labels:
