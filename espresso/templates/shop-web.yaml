@@ -13,31 +13,31 @@ spec:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 1
-      maxSurge: 1 
+      maxSurge: 1
   template: #Pods label section
     metadata:
       labels:
-        app: shop-web 
+        app: shop-web
         version: v1
-    spec:        
+    spec:
       containers:
-      - name: shop-web
-        image: "devopseasylearning2021/s3-project01-espresso-shop:v1.0.0"
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 80
-          protocol: TCP
-        env:
-        - name: ProductCatalogUrl 
-          valueFrom:
-            configMapKeyRef:   
-              name: coffee-shop      
-              key: ProdUrl 
-        - name: ReviewsUrl
-          valueFrom:
-            configMapKeyRef:
-              name: coffee-shop
-              key: RevUrl
+        - name: shop-web
+          image: "devopseasylearning2021/s3-project01-espresso-shop:v1.0.0"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          env:
+            - name: ProductCatalogUrl
+              valueFrom:
+                configMapKeyRef:
+                  name: coffee-shop
+                  key: ProdUrl
+            - name: ReviewsUrl
+              valueFrom:
+                configMapKeyRef:
+                  name: coffee-shop
+                  key: RevUrl
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -53,7 +53,7 @@ metadata:
   name: espresso-shop-web-svc
 spec:
   type: NodePort
-  selector: 
+  selector:
     version: v1
     app: shop-web
   ports:
