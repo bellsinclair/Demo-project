@@ -170,7 +170,6 @@ spec:
       labels:
         version: v2
         app: shop-reviews
-
     spec:
       containers:
         - name: shop-review2
