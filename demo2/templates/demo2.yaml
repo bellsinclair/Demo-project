@@ -37,6 +37,17 @@ spec:
     targetPort: 80
   type: LoadBalancer
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cfm
+data:
+  # property-like keys; each key maps to a simple value
+  ProdUrl: "http://espresso-shop-product-catalog-svc:8091"
+  RevUrl: "http://espresso-shop-reviews-svc:8092"
+  sv1: {{.Values.s1}}
+  sv2: {{.Values.s2}}
+---
 # Source: demo/templates/shop-product.yaml
 apiVersion: apps/v1
 kind: Deployment
